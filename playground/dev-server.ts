@@ -5,7 +5,7 @@ import {resolve} from 'node:path'
 
 const vite = await createViteServer({
   appType: 'custom',
-  server: {middlewareMode: true}
+  server: {middlewareMode: true},
 })
 
 const server = createHttpServer(async (req, res) => {
@@ -16,8 +16,7 @@ const server = createHttpServer(async (req, res) => {
       const template = readFileSync(resolve('./index.html'), 'utf-8')
 
       const transformed = await vite.transformIndexHtml(url, template)
-
-      const { render } = await vite.ssrLoadModule('/core/entry-server.ts')
+      const { render } = await vite.ssrLoadModule('virtual:virix/entry-server')
       const appHtml = await render(url)
 
       const html = transformed.replace(

@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "es2022",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "types": ["vite/client", "node"]
+  },
+  "include": [
+    "auto-imports.d.ts",
+    "components.d.ts",
+    "typed-router.d.ts",
+    "app.vue",
+    "pages/**/*.vue",
+    "layouts/**/*.vue",
+    "components/**/*.vue",
+    "composables/**/*.ts",
+    "vite.config.ts",
+    "dev-server.ts"
+  ]
+}

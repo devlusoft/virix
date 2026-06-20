@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import VueRouter from 'vue-router/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import virix from './core/plugin'
+import virix from 'virix'
 
 export default defineConfig({
   plugins: [
