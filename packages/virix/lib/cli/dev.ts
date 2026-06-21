@@ -1,8 +1,8 @@
 import {createServer as createViteServer} from 'vite'
 import {createServer as createHttpServer} from 'node:http'
-import {readFileSync} from 'node:fs'
+import {readFileSync, existsSync, mkdirSync, writeFileSync} from 'node:fs'
 import {resolve} from 'node:path'
-import virix from '../index.js'
+import virix, { DEFAULT_INDEX_HTML } from '../plugin.js'
 import vue from '@vitejs/plugin-vue'
 import VueRouter from 'vue-router/vite'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -15,6 +15,13 @@ const userConfig = mod.default ?? {}
 const userVite = userConfig.vite ?? {}
 const port = Number(userConfig.port ?? process.env.PORT ?? 3000)
 
+const virixDir = resolve(cwd, '.virix')
+const htmlPath = resolve(virixDir, 'index.html')
+if (!existsSync(htmlPath)) {
+  mkdirSync(virixDir, {recursive: true})
+  writeFileSync(htmlPath, DEFAULT_INDEX_HTML)
+}
+
 const vite = await createViteServer({
   appType: 'custom',
   server: {middlewareMode: true},
@@ -25,11 +32,11 @@ const vite = await createViteServer({
     AutoImport({
       imports: ['vue'],
       dirs: ['composables'],
-      dts: 'auto-imports.d.ts'
+      dts: '.virix/auto-imports.d.ts'
     }),
     Components({
       dirs: ['components'],
-      dts: 'components.d.ts',
+      dts: '.virix/components.d.ts',
       directoryAsNamespace: true
     }),
     virix(),
@@ -41,7 +48,7 @@ const server = createHttpServer(async (req, res) => {
   vite.middlewares(req, res, async () => {
     const url = req.url || '/'
     try {
-      const template = readFileSync(resolve(cwd, 'index.html'), 'utf-8')
+      const template = readFileSync(htmlPath, 'utf-8')
       const transformed = await vite.transformIndexHtml(url, template)
       const {render} = await vite.ssrLoadModule('virtual:virix/entry-server')
       const appHtml = await render(url)

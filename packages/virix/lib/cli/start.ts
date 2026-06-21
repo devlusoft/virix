@@ -10,10 +10,12 @@ const mod = await import(configPath)
 const userConfig = mod.default ?? {}
 const port = Number(userConfig.port ?? process.env.PORT ?? 3000)
 
-const template = readFileSync(resolve(cwd, 'dist/client/index.html'), 'utf-8')
+const template = readFileSync(resolve(cwd, 'dist/client/.virix/index.html'), 'utf-8')
 const {render} = await import(resolve(cwd, 'dist/server/entry-server.js'))
 
 const app = new Hono()
+
+app.use('/assets/*', serveStatic({root: './dist/client'}))
 
 app.get('*', async (c) => {
   try {
@@ -32,8 +34,6 @@ app.get('*', async (c) => {
     )
   }
 })
-
-app.use('/assets/*', serveStatic({root: './dist/client'}))
 
 const server = serve({fetch: app.fetch, port}, (info) => {
   console.log(`http://localhost:${info.port}`)

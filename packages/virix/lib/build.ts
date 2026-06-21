@@ -3,12 +3,21 @@ import vue from '@vitejs/plugin-vue'
 import VueRouter from 'vue-router/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
+import virix, { DEFAULT_INDEX_HTML } from './plugin.js'
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import { resolve } from 'path'
 
 export async function runBuild(cwd: string): Promise<void> {
   const userConfigModule = await import(resolve(cwd, 'virix.config.ts'))
   const userConfig = userConfigModule.default ?? {}
   const userVite = userConfig.vite ?? {}
+
+  const virixDir = resolve(cwd, '.virix')
+  const htmlPath = resolve(virixDir, 'index.html')
+  if (!existsSync(htmlPath)) {
+    mkdirSync(virixDir, { recursive: true })
+    writeFileSync(htmlPath, DEFAULT_INDEX_HTML)
+  }
 
   const frameworkPlugins = [
     vue(),
@@ -22,7 +31,8 @@ export async function runBuild(cwd: string): Promise<void> {
       dirs: ['components'],
       dts: false,
       directoryAsNamespace: true,
-    })
+    }),
+    virix()
   ]
 
   const baseConfig = {
@@ -40,6 +50,9 @@ export async function runBuild(cwd: string): Promise<void> {
     build: {
       outDir: 'dist/client',
       emptyOutDir: true,
+      rolldownOptions: {
+        input: htmlPath,
+      },
       ...userVite.build
     }
   })
