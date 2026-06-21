@@ -8,11 +8,11 @@
     "start": "virix start"
   },
   "dependencies": {
-    "vue": "^3.5.0",
-    "vue-router": "^5.0.0",
-    "virix": "^0.0.1"
+    "vue": "3.5.38",
+    "vue-router": "5.1.0",
+    "virix": "0.1.0"
   },
   "devDependencies": {
-    "typescript": "^5.7.0"
+    "typescript": "5.9.3"
   }
 }

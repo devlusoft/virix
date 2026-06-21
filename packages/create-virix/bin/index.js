@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+// lib/index.ts
 import { cpSync, existsSync, readFileSync, writeFileSync } from "fs";
 import { resolve, dirname, join } from "path";
 import { fileURLToPath } from "url";
