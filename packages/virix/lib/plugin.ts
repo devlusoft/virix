@@ -44,7 +44,32 @@ export async function render(url) {
 }
 `
 
-export default function virix(): Plugin {
+export interface VirixOptions {
+  layouts: string[]
+}
+
+function buildLayoutsModule(layouts: string[]): string {
+  if (layouts.length === 0) {
+    return 'export default {}\n'
+  }
+
+  const imports = layouts
+    .map((file, i) => `import __layout_${i} from '/layouts/${file}'`)
+    .join('\n')
+
+  const map = layouts
+    .map((file, i) => {
+      const name = file.replace(/\.vue$/, '').toLowerCase()
+      return `  '${name}': __layout_${i}`
+    })
+    .join(',\n')
+
+  return `${imports}\n\nexport default {\n${map}\n}\n`
+}
+
+export default function virix(options: VirixOptions = { layouts: [] }): Plugin {
+  const layoutsModule = buildLayoutsModule(options.layouts)
+
   return {
     name: 'virix:framework',
 
@@ -62,6 +87,10 @@ export default function virix(): Plugin {
       ) return '\0virtual:virix/router'
 
       if (id === 'virtual:virix/entry-server') return '\0virtual:virix/entry-server'
+
+      if (id === 'virtual:virix/layouts' || id === '\0virtual:virix/layouts') {
+        return '\0virtual:virix/layouts'
+      }
     },
 
     load(id) {
@@ -74,6 +103,7 @@ createApp(App).use(router).mount('#app')
 `
       if (id === '\0virtual:virix/router') return ROUTER_SOURCE
       if (id === '\0virtual:virix/entry-server') return ENTRY_SERVER_SOURCE
+      if (id === '\0virtual:virix/layouts') return layoutsModule
     },
 
     transformIndexHtml() {

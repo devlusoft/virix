@@ -6,7 +6,8 @@
   "main": "./dist/lib/index.js",
   "exports": {
     ".": "./dist/lib/index.js",
-    "./entry-server": "./dist/lib/entry-server.js"
+    "./entry-server": "./dist/lib/entry-server.js",
+    "./components/virix-layout": "./dist/lib/components/virix-layout.js"
   },
   "bin": {
     "virix": "./dist/bin/virix.js"
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "tsup": "8.5.1",
-    "vite": "8.0.16"
+    "vite": "8.0.16",
+    "typescript": "6.0.3"
   }
 }

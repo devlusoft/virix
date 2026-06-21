@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist",
+    "rootDir": ".",
+    "paths": {
+      "/app.vue": ["./lib/shims/app.vue.ts"]
+    },
+    "ignoreDeprecations": "6.0"
+  },
+  "include": [
+    "lib/**/*.ts"
+  ]
+}

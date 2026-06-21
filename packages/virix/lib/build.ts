@@ -1,11 +1,12 @@
-import { build as viteBuild } from 'vite'
+import {build as viteBuild} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import VueRouter from 'vue-router/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import virix, { DEFAULT_INDEX_HTML } from './plugin.js'
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
-import { resolve } from 'path'
+import virix, {DEFAULT_INDEX_HTML} from './plugin.js'
+import {existsSync, mkdirSync, readdirSync, writeFileSync} from 'node:fs'
+import {resolve} from 'path'
+import {ComponentResolver} from "unplugin-vue-components";
 
 export async function runBuild(cwd: string): Promise<void> {
   const userConfigModule = await import(resolve(cwd, 'virix.config.ts'))
@@ -15,8 +16,21 @@ export async function runBuild(cwd: string): Promise<void> {
   const virixDir = resolve(cwd, '.virix')
   const htmlPath = resolve(virixDir, 'index.html')
   if (!existsSync(htmlPath)) {
-    mkdirSync(virixDir, { recursive: true })
+    mkdirSync(virixDir, {recursive: true})
     writeFileSync(htmlPath, DEFAULT_INDEX_HTML)
+  }
+
+  const layoutsDir = resolve(cwd, 'layouts')
+  const layoutFiles = existsSync(layoutsDir)
+    ? readdirSync(layoutsDir).filter(f => f.endsWith('.vue'))
+    : []
+
+  const autoImportResolver: ComponentResolver = (componentName) => {
+    for (const entry of userConfig.autoImport ?? []) {
+      if (entry.names.includes(componentName)) {
+        return {name: componentName, from: entry.from}
+      }
+    }
   }
 
   const frameworkPlugins = [
@@ -31,8 +45,9 @@ export async function runBuild(cwd: string): Promise<void> {
       dirs: ['components'],
       dts: false,
       directoryAsNamespace: true,
+      resolvers: [autoImportResolver]
     }),
-    virix()
+    virix({layouts: layoutFiles})
   ]
 
   const baseConfig = {

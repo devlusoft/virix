@@ -1,3 +1,5 @@
+import {cpSync} from 'node:fs'
+import {execSync} from 'node:child_process'
 import {defineConfig} from 'tsup'
 
 export default defineConfig({
@@ -5,10 +7,10 @@ export default defineConfig({
     'lib/index.ts',
     'bin/virix.ts',
     'lib/entry-server.ts',
+    'lib/components/virix-layout.ts',
     'lib/cli/dev.ts',
     'lib/cli/build.ts',
     'lib/cli/start.ts',
-    'bin/virix.ts'
   ],
   format: ['esm'],
   outDir: 'dist',
@@ -21,6 +23,11 @@ export default defineConfig({
     '@vitejs/plugin-vue',
     'unplugin-auto-import',
     'unplugin-vue-components',
-    '/app.vue'
-  ]
+    '/app.vue',
+    /^virtual:/
+  ],
+  async onSuccess() {
+    execSync('tsc -p tsconfig.dts.json', {stdio: 'inherit'})
+    cpSync('lib/virtual-modules.d.ts', 'dist/lib/virtual-modules.d.ts')
+  }
 })

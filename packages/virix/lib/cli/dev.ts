@@ -1,12 +1,13 @@
 import {createServer as createViteServer} from 'vite'
 import {createServer as createHttpServer} from 'node:http'
-import {readFileSync, existsSync, mkdirSync, writeFileSync} from 'node:fs'
+import {readFileSync, existsSync, mkdirSync, writeFileSync, readdirSync} from 'node:fs'
 import {resolve} from 'node:path'
-import virix, { DEFAULT_INDEX_HTML } from '../plugin.js'
+import virix, {DEFAULT_INDEX_HTML} from '../plugin.js'
 import vue from '@vitejs/plugin-vue'
 import VueRouter from 'vue-router/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
+import {ComponentResolver} from "unplugin-vue-components";
 
 const cwd = process.cwd()
 const configPath = resolve(cwd, 'virix.config.ts')
@@ -20,6 +21,19 @@ const htmlPath = resolve(virixDir, 'index.html')
 if (!existsSync(htmlPath)) {
   mkdirSync(virixDir, {recursive: true})
   writeFileSync(htmlPath, DEFAULT_INDEX_HTML)
+}
+
+const layoutsDir = resolve(cwd, 'layouts')
+const layoutFiles = existsSync(layoutsDir)
+  ? readdirSync(layoutsDir).filter(f => f.endsWith('.vue'))
+  : []
+
+const autoImportResolver: ComponentResolver = (componentName) => {
+  for (const entry of userConfig.autoImport ?? []) {
+    if (entry.names.includes(componentName)) {
+      return {name: componentName, from: entry.from}
+    }
+  }
 }
 
 const vite = await createViteServer({
@@ -37,9 +51,10 @@ const vite = await createViteServer({
     Components({
       dirs: ['components'],
       dts: '.virix/components.d.ts',
-      directoryAsNamespace: true
+      directoryAsNamespace: true,
+      resolvers: [autoImportResolver]
     }),
-    virix(),
+    virix({layouts: layoutFiles}),
     ...(userVite.plugins ?? [])
   ]
 })
