@@ -5,7 +5,8 @@
   "type": "module",
   "main": "./dist/lib/index.js",
   "exports": {
-    ".": "./dist/lib/index.js"
+    ".": "./dist/lib/index.js",
+    "./entry-server": "./dist/lib/entry-server.js"
   },
   "bin": {
     "virix": "./dist/bin/virix.js"

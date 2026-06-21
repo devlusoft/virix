@@ -8,8 +8,14 @@ import vue from '@vitejs/plugin-vue'
 import VueRouter from 'vue-router/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
+import {runBuild} from "../lib/build";
 
 const command = process.argv[2]
+
+if (command === 'build') {
+  await runBuild(process.cwd())
+  process.exit(0)
+}
 
 if (command !== 'dev') {
   console.error('Usage: virix dev')

@@ -1,7 +1,7 @@
 import {defineConfig} from 'tsup'
 
 export default defineConfig({
-  entry: ['lib/index.ts', 'bin/virix.ts'],
+  entry: ['lib/index.ts', 'bin/virix.ts', 'lib/entry-server.ts'],
   format: ['esm'],
   outDir: 'dist',
   clean: true,
@@ -12,6 +12,7 @@ export default defineConfig({
     'vite',
     '@vitejs/plugin-vue',
     'unplugin-auto-import',
-    'unplugin-vue-components'
+    'unplugin-vue-components',
+    '/app.vue'
   ]
 })
