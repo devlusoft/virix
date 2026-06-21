@@ -15,7 +15,7 @@ export async function runBuild(cwd: string): Promise<void> {
     VueRouter({routesFolder: 'pages'}),
     AutoImport({
       imports: ['vue'],
-      dirs: ['components'],
+      dirs: ['composables'],
       dts: false,
     }),
     Components({

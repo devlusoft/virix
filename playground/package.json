@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "virix dev",
-    "build": "virix build"
+    "build": "virix build",
+    "start": "virix start"
   },
   "dependencies": {
     "virix": "workspace:*",
