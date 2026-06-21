@@ -1,0 +1,21 @@
+{
+  "name": "create-virix",
+  "version": "0.0.1",
+  "description": "Scaffold a new virix project",
+  "type": "module",
+  "bin": {
+    "create-virix": "./bin/index.js"
+  },
+  "files": [
+    "bin",
+    "src/template"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.0",
+    "typescript": "^5.7.0"
+  }
+}

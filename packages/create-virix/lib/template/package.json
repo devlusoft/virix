@@ -1,0 +1,18 @@
+{
+  "name": "my-virix-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "virix dev",
+    "build": "virix build",
+    "start": "virix start"
+  },
+  "dependencies": {
+    "vue": "3.5.0",
+    "vue-router": "5.0.0",
+    "virix": "0.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  }
+}
