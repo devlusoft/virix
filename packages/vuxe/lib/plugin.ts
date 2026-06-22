@@ -4,11 +4,11 @@ export const DEFAULT_INDEX_HTML = `<!DOCTYPE html>
    <html lang="en">
      <head>
        <meta charset="UTF-8" />
-       <title>virix app</title>
+       <title>vuxe app</title>
      </head>
      <body>
        <div id="app"></div>
-       <script type="module" src="/virtual:virix/entry-client"></script>
+       <script type="module" src="/virtual:vuxe/entry-client"></script>
      </body>
    </html>
    `
@@ -50,7 +50,7 @@ const ENTRY_SERVER_SOURCE = `
    }
 `
 
-export interface VirixOptions {
+export interface VuxeOptions {
   layouts: string[]
 }
 
@@ -73,7 +73,7 @@ function buildLayoutsModule(layouts: string[]): string {
 const ENTRY_CLIENT_SOURCE = `                                                                                                                                                                                                        
    import { createApp } from 'vue'                                                                                                                                                                                                      
    import App from '/app.vue'                                                                                                                                                                                                           
-   import { router } from 'virtual:virix/router'                                                                                                                                                                                        
+   import { router } from 'virtual:vuxe/router'                                                                                                                                                                                        
    import { createHead } from '@unhead/vue/client'                                                                                                                                                                                      
                                                                                                                                                                                                                                         
    const app = createApp(App)                                                                                                                                                                                                           
@@ -83,37 +83,37 @@ const ENTRY_CLIENT_SOURCE = `
    app.mount('#app')                                                                                                                                                                                                                    
    `
 
-export default function virix(options: VirixOptions = {layouts: []}): Plugin {
+export default function vuxe(options: VuxeOptions = {layouts: []}): Plugin {
   const layoutsModule = buildLayoutsModule(options.layouts)
 
   return {
-    name: 'virix:framework',
+    name: 'vuxe:framework',
 
     resolveId(id) {
       if (
-        id === 'virtual:virix/entry-client' ||
-        id === '/@id/virtual:virix/entry-client' ||
-        id === '/virtual:virix/entry-client'
-      ) return '\0virtual:virix/entry-client'
+        id === 'virtual:vuxe/entry-client' ||
+        id === '/@id/virtual:vuxe/entry-client' ||
+        id === '/virtual:vuxe/entry-client'
+      ) return '\0virtual:vuxe/entry-client'
 
       if (
-        id === 'virtual:virix/router' ||
-        id === '/@id/virtual:virix/router' ||
-        id === '/virtual:virix/router'
-      ) return '\0virtual:virix/router'
+        id === 'virtual:vuxe/router' ||
+        id === '/@id/virtual:vuxe/router' ||
+        id === '/virtual:vuxe/router'
+      ) return '\0virtual:vuxe/router'
 
-      if (id === 'virtual:virix/entry-server') return '\0virtual:virix/entry-server'
+      if (id === 'virtual:vuxe/entry-server') return '\0virtual:vuxe/entry-server'
 
-      if (id === 'virtual:virix/layouts' || id === '\0virtual:virix/layouts') {
-        return '\0virtual:virix/layouts'
+      if (id === 'virtual:vuxe/layouts' || id === '\0virtual:vuxe/layouts') {
+        return '\0virtual:vuxe/layouts'
       }
     },
 
     load(id) {
-      if (id === '\0virtual:virix/entry-client') return ENTRY_CLIENT_SOURCE
-      if (id === '\0virtual:virix/router') return ROUTER_SOURCE
-      if (id === '\0virtual:virix/entry-server') return ENTRY_SERVER_SOURCE
-      if (id === '\0virtual:virix/layouts') return layoutsModule
+      if (id === '\0virtual:vuxe/entry-client') return ENTRY_CLIENT_SOURCE
+      if (id === '\0virtual:vuxe/router') return ROUTER_SOURCE
+      if (id === '\0virtual:vuxe/entry-server') return ENTRY_SERVER_SOURCE
+      if (id === '\0virtual:vuxe/layouts') return layoutsModule
     },
 
     transformIndexHtml() {

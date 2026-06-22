@@ -9,13 +9,13 @@
     "types": ["vite/client"]
   },
   "include": [
-    ".virix/**/*.d.ts",
-    ".virix/typed-router.d.ts",
+    ".vuxe/**/*.d.ts",
+    ".vuxe/typed-router.d.ts",
     "app.vue",
     "pages/**/*.vue",
     "layouts/**/*.vue",
     "components/**/*.vue",
     "composables/**/*.ts",
-    "virix.config.ts"
+    "vuxe.config.ts"
   ]
 }

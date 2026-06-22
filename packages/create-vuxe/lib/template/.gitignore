@@ -2,5 +2,5 @@ node_modules
 dist
 .idea
 .DS_Store
-.virix
+.vuxe
 typed-router.d.ts

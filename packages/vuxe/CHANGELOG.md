@@ -1,4 +1,4 @@
-# virix
+# vuxe
 
 ## 0.2.0
 
@@ -9,5 +9,5 @@
 
 ### Patch Changes
 
-- Move generated `typed-router.d.ts` to `.virix/` directory to align with the convention for framework-generated files.
+- Move generated `typed-router.d.ts` to `.vuxe/` directory to align with the convention for framework-generated files.
 - Expand README with file conventions, configuration, CLI reference, head management usage, TypeScript sub-exports, and deployment instructions.

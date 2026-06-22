@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {RouterLink, RouterView} from 'vue-router'
-import {VirixLayout} from 'virix/components/virix-layout'
+import {VuxeLayout} from 'vuxe/components/vuxe-layout'
 </script>
 
 <template>
@@ -10,8 +10,8 @@ import {VirixLayout} from 'virix/components/virix-layout'
       <RouterLink to="/about">About</RouterLink>
       <RouterLink to="/admin">Admin</RouterLink>
     </nav>
-    <VirixLayout>
+    <VuxeLayout>
       <RouterView/>
-    </VirixLayout>
+    </VuxeLayout>
   </div>
 </template>

@@ -1,9 +1,9 @@
 import { defineComponent, computed, h, type Component } from 'vue'
 import { useRoute } from 'vue-router'
-import layouts from 'virtual:virix/layouts'
+import layouts from 'virtual:vuxe/layouts'
 
-export const VirixLayout = defineComponent({
-  name: 'VirixLayout',
+export const VuxeLayout = defineComponent({
+  name: 'VuxeLayout',
   setup(_, { slots }) {
     const route = useRoute()
     const layout = computed<Component | null>(() => {

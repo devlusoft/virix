@@ -2,7 +2,7 @@ import {createServer as createViteServer} from 'vite'
 import {createServer as createHttpServer} from 'node:http'
 import {readFileSync, existsSync, mkdirSync, writeFileSync, readdirSync} from 'node:fs'
 import {resolve} from 'node:path'
-import virix, {DEFAULT_INDEX_HTML} from '../plugin.js'
+import vuxe, {DEFAULT_INDEX_HTML} from '../plugin.js'
 import vue from '@vitejs/plugin-vue'
 import VueRouter from 'vue-router/vite'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -11,16 +11,16 @@ import {ComponentResolver} from "unplugin-vue-components";
 import {transformHtmlTemplate} from '@unhead/vue/server'
 
 const cwd = process.cwd()
-const configPath = resolve(cwd, 'virix.config.ts')
+const configPath = resolve(cwd, 'vuxe.config.ts')
 const mod = await import(configPath)
 const userConfig = mod.default ?? {}
 const userVite = userConfig.vite ?? {}
 const port = Number(userConfig.port ?? process.env.PORT ?? 3000)
 
-const virixDir = resolve(cwd, '.virix')
-const htmlPath = resolve(virixDir, 'index.html')
+const vuxeDir = resolve(cwd, '.vuxe')
+const htmlPath = resolve(vuxeDir, 'index.html')
 if (!existsSync(htmlPath)) {
-  mkdirSync(virixDir, {recursive: true})
+  mkdirSync(vuxeDir, {recursive: true})
   writeFileSync(htmlPath, DEFAULT_INDEX_HTML)
 }
 
@@ -43,19 +43,19 @@ const vite = await createViteServer({
   ...userVite,
   plugins: [
     vue(),
-    VueRouter({routesFolder: 'pages', dts: '.virix/typed-router.d.ts'}),
+    VueRouter({routesFolder: 'pages', dts: '.vuxe/typed-router.d.ts'}),
     AutoImport({
       imports: ['vue'],
       dirs: ['composables'],
-      dts: '.virix/auto-imports.d.ts'
+      dts: '.vuxe/auto-imports.d.ts'
     }),
     Components({
       dirs: ['components'],
-      dts: '.virix/components.d.ts',
+      dts: '.vuxe/components.d.ts',
       directoryAsNamespace: true,
       resolvers: [autoImportResolver]
     }),
-    virix({layouts: layoutFiles}),
+    vuxe({layouts: layoutFiles}),
     ...(userVite.plugins ?? [])
   ]
 })
@@ -67,7 +67,7 @@ const server = createHttpServer(async (req, res) => {
       const template = readFileSync(htmlPath, 'utf-8')
       const transformed = await vite.transformIndexHtml(url, template)
 
-      const {render} = await vite.ssrLoadModule('virtual:virix/entry-server')
+      const {render} = await vite.ssrLoadModule('virtual:vuxe/entry-server')
       const {html: appHtml, head} = await render(url)
       let html = transformHtmlTemplate(head, transformed.replace('<div id="app"></div>', `<div id="app">${appHtml}</div>`))
 

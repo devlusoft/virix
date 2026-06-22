@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import {useHead} from 'virix'
+import {useHead} from 'vuxe'
 
 useHead({
-  title: 'About — virix',
+  title: 'About — vuxe',
   meta: [
-    {name: 'description', content: 'Página about de virix'}
+    {name: 'description', content: 'Página about de vuxe'}
   ]
 })
 </script>

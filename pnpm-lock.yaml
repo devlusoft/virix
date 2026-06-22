@@ -12,7 +12,7 @@ importers:
         specifier: 2.27.0
         version: 2.27.0
 
-  packages/create-virix:
+  packages/create-vuxe:
     devDependencies:
       tsup:
         specifier: 8.5.1
@@ -21,7 +21,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  packages/virix:
+  packages/vuxe:
     dependencies:
       '@hono/node-server':
         specifier: 2.0.5
@@ -63,15 +63,15 @@ importers:
       '@unhead/vue':
         specifier: 3.1.4
         version: 3.1.4(esbuild@0.27.7)(lightningcss@1.32.0)(rolldown@1.0.3)(typescript@6.0.3)(vite@8.0.16(@types/node@22.20.0)(esbuild@0.27.7)(yaml@2.9.0))(vue@3.5.38(typescript@6.0.3))
-      virix:
-        specifier: workspace:*
-        version: link:../packages/virix
       vue:
         specifier: 3.5.38
         version: 3.5.38(typescript@6.0.3)
       vue-router:
         specifier: 5.1.0
         version: 5.1.0(@vue/compiler-sfc@3.5.38)(vite@8.0.16(@types/node@22.20.0)(esbuild@0.27.7)(yaml@2.9.0))(vue@3.5.38(typescript@6.0.3))
+      vuxe:
+        specifier: workspace:*
+        version: link:../packages/vuxe
     devDependencies:
       '@types/node':
         specifier: 22.20.0
