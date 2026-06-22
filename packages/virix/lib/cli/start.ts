@@ -3,6 +3,7 @@ import {resolve} from 'node:path'
 import {Hono} from 'hono'
 import {serve} from '@hono/node-server'
 import {serveStatic} from '@hono/node-server/serve-static'
+import {transformHtmlTemplate} from '@unhead/vue/server'
 
 const cwd = process.cwd()
 const configPath = resolve(cwd, 'virix.config.ts')
@@ -20,11 +21,8 @@ app.use('/assets/*', serveStatic({root: './dist/client'}))
 app.get('*', async (c) => {
   try {
     const url = c.req.path
-    const appHtml = await render(url)
-    const html = template.replace(
-      '<div id="app"></div>',
-      `<div id="app">${appHtml}</div>`
-    )
+    const {html: appHtml, head} = await render(url)
+    const html = transformHtmlTemplate(head, template.replace('<div id="app"></div>', `<div id="app">${appHtml}</div>`))
     return c.html(html)
   } catch (err) {
     console.error(err)
@@ -41,7 +39,7 @@ const server = serve({fetch: app.fetch, port}, (info) => {
 
 const shutdown = async () => {
   console.log('\nShutting down...')
-  await server.close()
+  server.close()
   process.exit(0)
 }
 process.on('SIGINT', shutdown)

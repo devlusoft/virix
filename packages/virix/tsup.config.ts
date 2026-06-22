@@ -23,6 +23,9 @@ export default defineConfig({
     '@vitejs/plugin-vue',
     'unplugin-auto-import',
     'unplugin-vue-components',
+    '@unhead/vue',
+    '@unhead/vue/client',
+    '@unhead/vue/server',
     '/app.vue',
     /^virtual:/
   ],

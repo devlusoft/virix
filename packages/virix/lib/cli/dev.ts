@@ -8,6 +8,7 @@ import VueRouter from 'vue-router/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import {ComponentResolver} from "unplugin-vue-components";
+import {transformHtmlTemplate} from '@unhead/vue/server'
 
 const cwd = process.cwd()
 const configPath = resolve(cwd, 'virix.config.ts')
@@ -65,12 +66,11 @@ const server = createHttpServer(async (req, res) => {
     try {
       const template = readFileSync(htmlPath, 'utf-8')
       const transformed = await vite.transformIndexHtml(url, template)
+
       const {render} = await vite.ssrLoadModule('virtual:virix/entry-server')
-      const appHtml = await render(url)
-      const html = transformed.replace(
-        '<div id="app"></div>',
-        `<div id="app">${appHtml}</div>`
-      )
+      const {html: appHtml, head} = await render(url)
+      let html = transformHtmlTemplate(head, transformed.replace('<div id="app"></div>', `<div id="app">${appHtml}</div>`))
+
       res.statusCode = 200
       res.setHeader('Content-Type', 'text/html')
       res.end(html)
