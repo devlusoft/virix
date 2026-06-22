@@ -2,6 +2,7 @@
   "name": "create-virix",
   "version": "0.1.0",
   "description": "Scaffold a new virix project",
+  "private": true,
   "type": "module",
   "bin": {
     "create-virix": "./bin/index.js"

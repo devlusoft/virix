@@ -1,16 +1,34 @@
 {
   "name": "virix",
   "version": "0.2.0",
-  "private": true,
   "type": "module",
   "main": "./dist/lib/index.js",
+  "types": "./dist/lib/index.d.ts",
   "exports": {
-    ".": "./dist/lib/index.js",
-    "./entry-server": "./dist/lib/entry-server.js",
-    "./components/virix-layout": "./dist/lib/components/virix-layout.js"
+    ".": {
+      "types": "./dist/lib/index.d.ts",
+      "default": "./dist/lib/index.js"
+    },
+    "./entry-server": {
+      "types": "./dist/lib/entry-server.d.ts",
+      "default": "./dist/lib/entry-server.js"
+    },
+    "./components/virix-layout": {
+      "types": "./dist/lib/components/virix-layout.d.ts",
+      "default": "./dist/lib/components/virix-layout.js"
+    }
   },
   "bin": {
     "virix": "./dist/bin/virix.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENCE"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "build": "tsup",
