@@ -35,7 +35,7 @@ export async function runBuild(cwd: string): Promise<void> {
 
   const frameworkPlugins = [
     vue(),
-    VueRouter({routesFolder: 'pages'}),
+    VueRouter({routesFolder: 'pages', dts: '.virix/typed-router.d.ts'}),
     AutoImport({
       imports: ['vue'],
       dirs: ['composables'],

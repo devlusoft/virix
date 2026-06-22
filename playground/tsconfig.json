@@ -5,7 +5,6 @@
   },
   "include": [
     ".virix/**/*.d.ts",
-    ".virix/typed-router.d.ts",
     "app.vue",
     "pages/**/*.vue",
     "layouts/**/*.vue",

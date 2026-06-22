@@ -43,7 +43,7 @@ const vite = await createViteServer({
   ...userVite,
   plugins: [
     vue(),
-    VueRouter({routesFolder: 'pages'}),
+    VueRouter({routesFolder: 'pages', dts: '.virix/typed-router.d.ts'}),
     AutoImport({
       imports: ['vue'],
       dirs: ['composables'],
