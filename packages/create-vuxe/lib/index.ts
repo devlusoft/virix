@@ -10,7 +10,7 @@ const TEMPLATE_DIR = resolve(__dirname, '../lib/template')
 const projectName = process.argv[2]
 
 if (!projectName) {
-  console.error('Usage: create-virix <project-name>')
+  console.error('Usage: create-vuxe <project-name>')
   process.exit(1)
 }
 

@@ -1,16 +1,16 @@
 {
-  "name": "my-virix-app",
+  "name": "my-vuxe-app",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "virix dev",
-    "build": "virix build",
-    "start": "virix start"
+    "dev": "vuxe dev",
+    "build": "vuxe build",
+    "start": "vuxe start"
   },
   "dependencies": {
     "vue": "3.5.38",
     "vue-router": "5.1.0",
-    "virix": "0.1.0"
+    "vuxe": "0.2.0"
   },
   "devDependencies": {
     "typescript": "5.9.3"

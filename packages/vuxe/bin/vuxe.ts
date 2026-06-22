@@ -28,17 +28,17 @@ switch (command) {
   case '--help':
   case '-h':
     console.log(`                                                                                                                                                                                                                    
-   virix — meta-framework ligero de Vue                                                                                                                                                                                                 
+   vuxe — meta-framework ligero de Vue                                                                                                                                                                                                  
                                                                                                                                                                                                                                         
    Usage:                                                                                                                                                                                                                               
-     virix dev        Start development server                                                                                                                                                                                          
-     virix build      Build for production                                                                                                                                                                                              
-     virix start      Start production server                                                                                                                                                                                           
+     vuxe dev         Start development server                                                                                                                                                                                          
+     vuxe build       Build for production                                                                                                                                                                                              
+     vuxe start       Start production server                                                                                                                                                                                           
        `.trim())
     break
   default:
     console.error(`Unknown command: ${command}`)
-    console.error('Usage: virix <dev|build|start>')
+    console.error('Usage: vuxe <dev|build|start>')
     process.exit(1)
 }
 

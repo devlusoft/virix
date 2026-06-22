@@ -5,6 +5,6 @@ const now = useNow()
 <template>
   <h1>Hello from pages/index.vue</h1>
   <p>Current time: {{ now.toLocaleString() }}</p>
-  <Hello name="virix" />
+  <Hello name="vuxe" />
   <FormsInput label="Test" />
 </template>

@@ -1,11 +1,11 @@
 {
-  "name": "create-virix",
+  "name": "create-vuxe",
   "version": "0.1.0",
-  "description": "Scaffold a new virix project",
+  "description": "Scaffold a new vuxe project",
   "private": true,
   "type": "module",
   "bin": {
-    "create-virix": "./bin/index.js"
+    "create-vuxe": "./bin/index.js"
   },
   "files": [
     "bin",
